@@ -40,7 +40,7 @@ function getjson(){
                             "</tr>");*/
                         //$("#token"+cabin).append(token);
 
-                        document.getElementById("token3").innerHTML = token;
+                        document.getElementById("token"+cabin).innerHTML = token;
                     }
                     else if(status === "A")
                     {
@@ -49,7 +49,7 @@ function getjson(){
                             "<td class=\"success\" > You are being Attended </td>"+
                             "</tr>");*/
                         //$("#token"+cabin).append(token);
-                        document.getElementById("token2").innerHTML = token;
+                        document.getElementById("token"+cabin).innerHTML = token;
                     }
                     else
                     {}
