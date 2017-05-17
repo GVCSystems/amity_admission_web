@@ -28,12 +28,12 @@ public class WebController {
 
     @GetMapping("/")
     public String blank_index() {
-        return "check";
+        return "something";
     }
 
     @GetMapping("/check")
     public String check() {
-        return "check";
+        return "something";
     }
 
     @Autowired
