@@ -176,4 +176,33 @@ public class WebController {
         //return context.getBean(MyBean.class).topic;
         return list;
     }
+
+    @RequestMapping(value={"/waiting"},method = RequestMethod.GET)
+    @ResponseBody
+    public String waiting(@RequestParam Map<String,String> allRequestParams, ModelMap model) throws ParseException {
+
+        Query searchUserQuery = new Query();
+
+        for(Map.Entry<String,String> entry : allRequestParams.entrySet())
+        {
+            if(entry.getValue()==null)
+                entry.setValue("");
+            searchUserQuery.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+        }
+
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date current_date = new Date();
+        String current_date_str = format.format(current_date);
+
+        Criteria criteria2 = Criteria.where("status").is("G"),
+                criteria4 = Criteria.where("gdate").is(current_date_str);
+
+        searchUserQuery.addCriteria(new Criteria().orOperator(criteria2,criteria4));
+        searchUserQuery.with(new Sort(new Sort.Order(Sort.Direction.ASC, "token")));
+
+        List<Customer> list = mongoTemplate.find(searchUserQuery,Customer.class,"amitynoida");
+
+        //return context.getBean(MyBean.class).topic;
+        return list.size()+"";
+    }
 }
