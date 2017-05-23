@@ -9,6 +9,7 @@ public class Customer {
 
     String cabin,token,status,gtime,wtime,atime,otime,gdate,wdate,adate,odate;
     String total="0";
+    String time_inside;
 
     public void setCabin(String cabin)
     {this.cabin=cabin;}
@@ -46,6 +47,9 @@ public class Customer {
     public void settotal(String total)
     {this.total = total;}
 
+    public void setTime_inside(String time_inside)
+    {this.time_inside = time_inside;}
+
     public String getotime(){return this.otime;}
     public String getatime(){return this.atime;}
     public String getwtime(){return this.wtime;}
@@ -58,4 +62,5 @@ public class Customer {
     public String getwdate(){return this.wdate;}
     public String getadate(){return this.adate;}
     public String getTotal(){return this.total;}
+    public String getTime_inside(){return this.time_inside;}
 }

@@ -17,6 +17,7 @@ import java.util.*;
 
 import org.slf4j.Logger;
 
+@CrossOrigin
 @Controller
 public class WebController {
 
@@ -24,7 +25,7 @@ public class WebController {
 
     @GetMapping("/")
     public String blank_index() {
-        return "xyz2";
+        return "xyz";
     }
 
     @GetMapping("/check")
@@ -35,7 +36,6 @@ public class WebController {
     @Autowired
     MongoTemplate mongoTemplate;
 
-    @CrossOrigin
     @RequestMapping(value={"/search"},method = RequestMethod.GET)
     @ResponseBody
     public List<Customer> search(@RequestParam Map<String,String> allRequestParams, ModelMap model) {
@@ -66,7 +66,6 @@ public class WebController {
         return list;
     }
 
-    @CrossOrigin
     @RequestMapping(value={"/summary"},method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<Summary> searchFilter(@RequestParam (value="from")String from,@RequestParam(value="to")String to) throws ParseException {
@@ -82,8 +81,8 @@ public class WebController {
 
 
         ArrayList<Summary> final_list = new ArrayList<Summary>();
-        System.out.println(date_from.toString());
-        System.out.println(date_to.toString());
+        //System.out.println(date_from.toString());
+        //System.out.println(date_to.toString());
 
         for(;!date_from.toString().equals(date_to.toString());date_from = c.getTime())
         {
@@ -92,7 +91,7 @@ public class WebController {
             Criteria criteria = new Criteria();
             criteria.orOperator(Criteria.where("gdate").is(df.format(date_from)));
 
-            System.out.println(df.format(date_from));
+            //System.out.println(df.format(date_from));
 
             searchUserQuery.addCriteria(criteria);
             List<Customer> list = mongoTemplate.find(searchUserQuery,Customer.class,"amitynoida");
@@ -110,9 +109,9 @@ public class WebController {
                 total += Integer.parseInt(min)*60 + Integer.parseInt(sec);
 
             }
-            System.out.println(list.size());
+            //System.out.println(list.size());
             Summary summary = new Summary();
-            System.out.println("Total: "+total);
+            //System.out.println("Total: "+total);
 
             long min = total/60;
             long sec = total%60;
@@ -130,13 +129,51 @@ public class WebController {
 
         //searchUserQuery.with(new Sort(new Sort.Order(Sort.Direction.ASC, "token")));
 
-
-        //for(Customer bean : list)
-        {
-
-        }
         //return context.getBean(MyBean.class).topic;
         return final_list;
     }
+    @RequestMapping(value={"/monitor"},method = RequestMethod.GET)
+    @ResponseBody
+    public List<Customer> monitor(@RequestParam Map<String,String> allRequestParams, ModelMap model) throws ParseException {
 
+        Query searchUserQuery = new Query();
+
+        for(Map.Entry<String,String> entry : allRequestParams.entrySet())
+        {
+            if(entry.getValue()==null)
+                entry.setValue("");
+            searchUserQuery.addCriteria(Criteria.where(entry.getKey()).is(entry.getValue()));
+        }
+
+        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+        Date current_date = new Date();
+        String current_date_str = format.format(current_date);
+
+        Criteria criteria2 = Criteria.where("status").is("W"),
+                criteria3 = Criteria.where("status").is("A"),
+                criteria4 = Criteria.where("gdate").is(current_date_str);
+
+        searchUserQuery.addCriteria(new Criteria().orOperator(criteria2,criteria3,criteria4));
+        searchUserQuery.with(new Sort(new Sort.Order(Sort.Direction.ASC, "token")));
+
+        List<Customer> list = mongoTemplate.find(searchUserQuery,Customer.class,"amitynoida");
+        for(Customer bean : list)
+        {
+            DateFormat df =new SimpleDateFormat("HH:mm:ss");
+            Date date=null;
+            if(bean.status.equals("W"))
+                date = df.parse(bean.wtime);
+            else
+                date = df.parse(bean.atime);
+
+            Date current = df.parse(df.format(new Date()));
+            long diff = current.getTime() - date.getTime();
+            diff=diff/1000;
+            String time_inside = diff/60 + ":"+diff%60;
+            bean.time_inside = time_inside;
+
+        }
+        //return context.getBean(MyBean.class).topic;
+        return list;
+    }
 }
