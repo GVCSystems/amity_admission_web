@@ -24,17 +24,18 @@ public class WebController {
 
     @GetMapping("/")
     public String blank_index() {
-        return "xyz";
+        return "xyz2";
     }
 
     @GetMapping("/check")
     public String check() {
-        return "xyz";
+        return "xyz2";
     }
 
     @Autowired
     MongoTemplate mongoTemplate;
 
+    @CrossOrigin
     @RequestMapping(value={"/search"},method = RequestMethod.GET)
     @ResponseBody
     public List<Customer> search(@RequestParam Map<String,String> allRequestParams, ModelMap model) {
@@ -65,6 +66,7 @@ public class WebController {
         return list;
     }
 
+    @CrossOrigin
     @RequestMapping(value={"/summary"},method = RequestMethod.GET)
     @ResponseBody
     public ArrayList<Summary> searchFilter(@RequestParam (value="from")String from,@RequestParam(value="to")String to) throws ParseException {
