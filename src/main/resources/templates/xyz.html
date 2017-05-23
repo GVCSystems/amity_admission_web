@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>index</title>
+
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme --></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript --> </link>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet"  type="text/css"  href="styles.css?version=51"></link>
+    <script src="main.js">  </script>
+</head>
+<body>
+
+    <div class="jumbotron text-center" >
+        <p>Amity Admission </p>
+    </div>
+    <div class="mydiv">
+        <div class="form-group">
+
+            <label for="inputEmail3" class="col-sm-2 control-label">Date:</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" id="inputEmail3" />
+            </div>
+        </div>
+        <br>
+        </br>
+        <div class="form-group">
+
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success  btn-lg"  onClick="getjson()">Find</button>
+
+                <br> </br>
+
+            </div>
+        </div>
+    </div>
+
+    <br> </br> <br> </br> <br> </br>  <br> </br> <br> </br> <br> </br>
+    <div class="mydiv2" id="mydiv2" >
+
+        <table id="table_data" class="table table-hover">
+            <th>Token</th>
+            <th>cabin</th>
+            <th>status</th>
+            <th>In Time</th>
+            <th>Out Time</th>
+            <th>Total Time</th>
+
+            <tr>
+                <td>1</td>
+                <td>4</td>
+                <td>waiting </td>
+                <td>7min</td>
+            </tr>
+        </table>
+
+    </div>
+
+<script type="text/javascript">
+	
+function showtable() {
+	
+	document.getElementById('table').innerHTML ='';
+	
+} 
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>
+
+
