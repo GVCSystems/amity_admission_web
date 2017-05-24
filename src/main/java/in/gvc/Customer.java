@@ -63,4 +63,14 @@ public class Customer {
     public String getadate(){return this.adate;}
     public String getTotal(){return this.total;}
     public String getTime_inside(){return this.time_inside;}
+
+    public long total_in_seconds()
+    {
+        StringBuilder builder = new StringBuilder(total);
+        String min = builder.substring(0,builder.indexOf(":"));
+        builder.delete(0,builder.indexOf(":")+1);
+        String sec = builder.toString();
+        long seconds = Integer.parseInt(min)*60 + Integer.parseInt(sec);
+        return seconds;
+    }
 }
